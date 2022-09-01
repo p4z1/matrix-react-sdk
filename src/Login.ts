@@ -53,8 +53,8 @@ export interface ISSOFlow {
     type: "m.login.sso" | "m.login.cas";
     // eslint-disable-next-line camelcase
     identity_providers?: IIdentityProvider[];
-    "delegated_oidc_compatibility"?: boolean;
-    "org.matrix.msc3824.delegated_oidc_compatibility"?: boolean;
+    [DELEGATED_OIDC_COMPATIBILITY.name]?: boolean;
+    [DELEGATED_OIDC_COMPATIBILITY.altName]?: boolean;
 }
 
 export type LoginFlow = ISSOFlow | IPasswordFlow;
