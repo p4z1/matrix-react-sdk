@@ -18,6 +18,7 @@ import React, { ReactNode } from 'react';
 import { MatrixError } from "matrix-js-sdk/src/http-api";
 import classNames from "classnames";
 import { logger } from "matrix-js-sdk/src/logger";
+import { SSOAction } from 'matrix-js-sdk/src/@types/auth';
 
 import { _t, _td } from '../../../languageHandler';
 import Login, { ISSOFlow, LoginFlow } from '../../../Login';
@@ -357,7 +358,7 @@ export default class LoginComponent extends React.PureComponent<IProps, IState> 
             ev.stopPropagation();
             const ssoKind = ssoFlow.type === 'm.login.sso' ? 'sso' : 'cas';
             PlatformPeg.get().startSingleSignOn(this.loginLogic.createTemporaryClient(), ssoKind,
-                this.props.fragmentAfterLogin, undefined, "register");
+                this.props.fragmentAfterLogin, undefined, SSOAction.REGISTER);
         } else {
             // Don't intercept - just go through to the register page
             this.onRegisterClick(ev);

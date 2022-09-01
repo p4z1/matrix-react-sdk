@@ -19,6 +19,7 @@ import { chunk } from "lodash";
 import classNames from "classnames";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { Signup } from "@matrix-org/analytics-events/types/typescript/Signup";
+import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import PlatformPeg from "../../../PlatformPeg";
 import AccessibleButton from "./AccessibleButton";
@@ -34,7 +35,7 @@ import { PosthogAnalytics } from "../../../PosthogAnalytics";
 interface ISSOButtonProps extends IProps {
     idp?: IIdentityProvider;
     mini?: boolean;
-    action?: "login" | "register";
+    action?: SSOAction;
 }
 
 const getIcon = (brand: IdentityProviderBrand | string) => {
@@ -144,7 +145,7 @@ interface IProps {
     loginType?: "sso" | "cas";
     fragmentAfterLogin?: string;
     primary?: boolean;
-    action?: "login" | "register";
+    action?: SSOAction;
 }
 
 const MAX_PER_ROW = 6;

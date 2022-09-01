@@ -22,6 +22,7 @@ import { encodeUnpaddedBase64 } from "matrix-js-sdk/src/crypto/olmlib";
 import { logger } from "matrix-js-sdk/src/logger";
 import { MatrixEvent } from "matrix-js-sdk/src/models/event";
 import { Room } from "matrix-js-sdk/src/models/room";
+import { SSOAction } from "matrix-js-sdk/src/@types/auth";
 
 import dis from './dispatcher/dispatcher';
 import BaseEventIndexManager from './indexing/BaseEventIndexManager';
@@ -319,7 +320,7 @@ export default abstract class BasePlatform {
      * @param {MatrixClient} mxClient the matrix client using which we should start the flow
      * @param {"sso"|"cas"} loginType the type of SSO it is, CAS/SSO.
      * @param {string} fragmentAfterLogin the hash to pass to the app during sso callback.
-     * @param {"login"|"register"} action the SSO flow to indicate to the IdP, optional.
+     * @param {SSOAction"} action the SSO flow to indicate to the IdP, optional.
      * @param {string} idpId The ID of the Identity Provider being targeted, optional.
      */
     public startSingleSignOn(
@@ -327,7 +328,7 @@ export default abstract class BasePlatform {
         loginType: "sso" | "cas",
         fragmentAfterLogin: string,
         idpId?: string,
-        action?: "login" | "register",
+        action?: SSOAction,
     ): void {
         // persist hs url and is url for when the user is returned to the app with the login token
         localStorage.setItem(SSO_HOMESERVER_URL_KEY, mxClient.getHomeserverUrl());
