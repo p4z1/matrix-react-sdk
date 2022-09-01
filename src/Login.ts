@@ -19,6 +19,7 @@ limitations under the License.
 import { createClient } from "matrix-js-sdk/src/matrix";
 import { MatrixClient } from "matrix-js-sdk/src/client";
 import { logger } from "matrix-js-sdk/src/logger";
+import { UnstableValue } from "matrix-js-sdk/src/NamespacedValue";
 
 import { IMatrixClientCreds } from "./MatrixClientPeg";
 import SecurityCustomisations from "./customisations/Security";
@@ -69,8 +70,10 @@ interface ILoginParams {
 }
 /* eslint-enable camelcase */
 
-export const DELEGATED_OIDC_COMPATIBILITY = "delegated_oidc_compatibility";
-export const UNSTABLE_DELEGATED_OIDC_COMPATIBILITY = "org.matrix.msc3824.delegated_oidc_compatibility";
+export const DELEGATED_OIDC_COMPATIBILITY = new UnstableValue(
+    "delegated_oidc_compatibility",
+    "org.matrix.msc3824.delegated_oidc_compatibility",
+);
 
 export default class Login {
     private hsUrl: string;
@@ -132,7 +135,7 @@ export default class Login {
         // If an m.login.sso flow is present that is flagged as being for MSC3824 OIDC compatibility then we only return that flow
         const oidcCompatibilityFlow =
             flows.find(f => f.type === "m.login.sso"
-                && (f[DELEGATED_OIDC_COMPATIBILITY] || f[UNSTABLE_DELEGATED_OIDC_COMPATIBILITY]));
+                && DELEGATED_OIDC_COMPATIBILITY.findIn(f));
         this.flows = oidcCompatibilityFlow ? [oidcCompatibilityFlow] : flows;
         return this.flows;
     }

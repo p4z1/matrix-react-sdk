@@ -25,7 +25,7 @@ import AccessibleButton from "./AccessibleButton";
 import { _t } from "../../../languageHandler";
 import {
     IdentityProviderBrand, IIdentityProvider, ISSOFlow,
-    DELEGATED_OIDC_COMPATIBILITY, UNSTABLE_DELEGATED_OIDC_COMPATIBILITY,
+    DELEGATED_OIDC_COMPATIBILITY,
 } from "../../../Login";
 import AccessibleTooltipButton from "./AccessibleTooltipButton";
 import { mediaFromMxc } from "../../../customisations/Media";
@@ -90,7 +90,7 @@ const SSOButton: React.FC<ISSOButtonProps> = ({
     let label: string;
     if (idp) {
         label = _t("Continue with %(provider)s", { provider: idp.name });
-    } else if (flow[DELEGATED_OIDC_COMPATIBILITY] || flow[UNSTABLE_DELEGATED_OIDC_COMPATIBILITY]) {
+    } else if (DELEGATED_OIDC_COMPATIBILITY.findIn<boolean>(flow)) {
         label = _t("Continue");
     } else {
         label = _t("Sign in with single sign-on");
