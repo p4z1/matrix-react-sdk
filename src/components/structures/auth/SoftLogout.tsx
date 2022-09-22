@@ -17,6 +17,7 @@ limitations under the License.
 import React from 'react';
 import { logger } from "matrix-js-sdk/src/logger";
 import { Optional } from "matrix-events-sdk";
+import { SSOAction } from 'matrix-js-sdk/src/@types/auth';
 
 import { _t } from '../../../languageHandler';
 import dis from '../../../dispatcher/dispatcher';
@@ -253,7 +254,7 @@ export default class SoftLogout extends React.Component<IProps, IState> {
                     loginType={loginType}
                     fragmentAfterLogin={this.props.fragmentAfterLogin}
                     primary={!this.state.flows.find(flow => flow.type === "m.login.password")}
-                    action="login"
+                    action={SSOAction.LOGIN}
                 />
             </div>
         );
