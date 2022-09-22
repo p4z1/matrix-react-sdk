@@ -39,7 +39,6 @@ export default class Login {
     private hsUrl: string;
     private isUrl: string;
     private fallbackHsUrl: string;
-    // TODO: Flows need a type in JS SDK
     private flows: Array<LoginFlow>;
     private defaultDeviceDisplayName: string;
     private tempClient: MatrixClient;
