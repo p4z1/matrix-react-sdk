@@ -95,5 +95,6 @@ export const mockClientMethodsServer = (): Partial<Record<MethodKeysOf<MatrixCli
     getHomeserverUrl: jest.fn(),
     getCapabilities: jest.fn().mockReturnValue({}),
     doesServerSupportUnstableFeature: jest.fn().mockResolvedValue(false),
+    getClientWellKnown: jest.fn().mockReturnValue({}),
 });
 
