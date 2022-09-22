@@ -20,6 +20,7 @@ import React from 'react';
 import { SERVICE_TYPES } from "matrix-js-sdk/src/service-types";
 import { IThreepid } from "matrix-js-sdk/src/@types/threepids";
 import { logger } from "matrix-js-sdk/src/logger";
+import { IDelegatedAuthConfig, M_AUTHENTICATION } from 'matrix-js-sdk/src/matrix';
 
 import { _t } from "../../../../../languageHandler";
 import ProfileSettings from "../../ProfileSettings";
@@ -126,11 +127,12 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
         // the enabled flag value.
         const canChangePassword = !changePasswordCap || changePasswordCap['enabled'] !== false;
 
-        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword });
+        const delegatedAuthConfig = M_AUTHENTICATION.findIn<IDelegatedAuthConfig | undefined>(cli.getClientWellKnown());
+        const externalAccountManagementUrl = delegatedAuthConfig?.account;
+
+        this.setState({ serverSupportsSeparateAddAndBind, canChangePassword, externalAccountManagementUrl });
 
         this.getThreepidState();
-
-        this.getExternalAccountManagementUrl();
     }
 
     public async componentDidMount(): Promise<void> {
@@ -191,15 +193,6 @@ export default class GeneralUserSettingsTab extends React.Component<IProps, ISta
             msisdns: threepids.filter((a) => a.medium === 'msisdn'),
             loading3pids: false,
         });
-    }
-
-    private async getExternalAccountManagementUrl(): Promise<void> {
-        const cli = MatrixClientPeg.get();
-
-        const externalAccountManagementUrl =
-            (await cli.waitForClientWellKnown())['org.matrix.msc2965.authentication']?.account;
-
-        this.setState({ externalAccountManagementUrl });
     }
 
     private async checkTerms(): Promise<void> {
