@@ -22,7 +22,7 @@ function remoteRender(event: MessageEvent): void {
     if (hasCalled) {
         document.body.replaceWith(document.createElement("BODY"));
     }
-    hasCalled = true;
+    hasCalled = false;
 
     const img: HTMLSpanElement = document.createElement("span"); // we'll mask it as an image
     img.id = "img";
